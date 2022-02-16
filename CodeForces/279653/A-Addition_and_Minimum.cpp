@@ -18,7 +18,7 @@ typedef struct {
 vector<Node> seg;
 
 int main() {
-    // ibs; cti;
+    ibs; cti;
     int n, m;
     int op, l, r;
     lli v;
@@ -31,11 +31,11 @@ int main() {
 
         if (op == 1) {
             cin >> l >> r >> v;
-            update(1, 1, n, l + 1, r, v);    
+            update(1, 1, n, l + 1, r, v);
         } else {
             cin >> l >> r;
             cout << query(1, 1, n, l + 1, r) << "\n"; 
-        }
+        }    
     }
 
     return 0;
@@ -46,7 +46,7 @@ void refresh(int pos, int start, int end) {
 
     lli num = seg[pos].lzSum;
     seg[pos].lzSum = 0;
-    seg[pos].sum += (end - start + 1) * num;
+    seg[pos].sum += num;
 
     if (start == end) return;
 
@@ -74,13 +74,13 @@ void update(int pos, int start, int end, int p, int q, lli val) {
     update(l, start, m, p, q, val);
     update(r, m + 1, end, p, q, val);
 
-    seg[pos].sum = seg[l].sum + seg[r].sum;
+    seg[pos].sum = min(seg[l].sum, seg[r].sum);
 }
 
 lli query(int pos, int start, int end, int l, int r) {
     refresh(pos, start, end);
-    if (r < start || l > end) return INT_MAX;
-    if (l <= start && end <= r) return seg[pos].sum;
+    if (r < start or l > end) return INT_MAX;
+    if (l <= start and end <= r) return seg[pos].sum;
 
     int middle = (start + end) / 2;
 
